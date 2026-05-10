@@ -1,113 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KEEM FOREIGN — Elite</title>
-  <style>
-    :root {
-      --zinc: #09090b;
-      --emerald: #10b981;
-      --glass: rgba(255, 255, 255, 0.05);
-      --border: rgba(255, 255, 255, 0.1);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEEM FOREIGN | Elite</title>
+    <style>
+        :root {
+            --bg: #09090b;
+            --card: #111113;
+            --emerald: #10b981;
+            --indigo: #6366f1;
+            --text: #f4f4f5;
+            --dim: #71717a;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background-color: var(--zinc);
-      color: #f4f4f5;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.6;
-    }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, system-ui, sans-serif;
+            padding: 20px;
+            line-height: 1.5;
+        }
 
-    .container { padding: 20px; max-width: 450px; margin: 0 auto; }
+        /* 2026 Header */
+        header {
+            text-align: center;
+            padding: 40px 0;
+            letter-spacing: 4px;
+            font-weight: 800;
+            color: var(--emerald);
+            text-transform: uppercase;
+        }
 
-    header {
-      padding: 40px 0 20px;
-      text-align: center;
-      letter-spacing: 5px;
-      font-weight: 700;
-      color: var(--emerald);
-    }
+        /* Pure CSS Placeholder Hero */
+        .hero-placeholder {
+            width: 100%;
+            height: 250px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.2);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
 
-    /* Vibrant Gradient Placeholders that won't break */
-    .img-box {
-      width: 100%;
-      height: 220px;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-    
-    .hero-img { background: linear-gradient(135deg, #064e3b 0%, #10b981 100%); height: 280px; }
-    .re-img   { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); }
-    .tech-img { background: linear-gradient(135deg, #18181b 0%, #3f3f46 100%); }
+        .section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--dim);
+            margin-bottom: 15px;
+        }
 
-    .card {
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
+        /* Glass Cards */
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
 
-    h2 { font-size: 24px; margin-bottom: 8px; color: #fff; }
-    p { color: #a1a1aa; font-size: 14px; margin-bottom: 15px; }
+        /* Image Placeholders */
+        .img-placeholder {
+            width: 100%;
+            height: 180px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
 
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 20px;
-      background: var(--emerald);
-      color: #000;
-      text-align: center;
-      text-decoration: none;
-      font-weight: 700;
-      border-radius: 50px;
-      margin-top: 30px;
-      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
-      transition: 0.3s;
-    }
+        .re-bg { background: linear-gradient(45deg, #1e1b4b, #4338ca); }
+        .tech-bg { background: linear-gradient(45deg, #18181b, #3f3f46); }
 
-    footer {
-      text-align: center;
-      padding: 40px 0;
-      font-size: 11px;
-      color: #52525b;
-      letter-spacing: 1px;
-    }
-  </style>
+        h2 { font-size: 1.4rem; margin-bottom: 8px; }
+        p { font-size: 0.9rem; color: var(--dim); margin-bottom: 20px; }
+
+        /* Shimmer Button */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: var(--emerald);
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.7rem;
+            color: var(--dim);
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-  <header>KEEM FOREIGN</header>
+    <header>KEEM FOREIGN</header>
 
-  <div class="img-box hero-img">THE GOLD STANDARD</div>
+    <div class="hero-placeholder">
+        THE GOLD STANDARD
+    </div>
 
-  <div class="card">
-    <div class="img-box re-img">LUXURY PROPERTIES</div>
-    <h2>Real Estate</h2>
-    <p>Exclusive off-market listings in Abuja & Dubai. Curated for the high-end investor.</p>
-  </div>
+    <div class="section-title">Exclusive Divisions</div>
 
-  <div class="card">
-    <div class="img-box tech-img">TECH CONCIERGE</div>
-    <h2>Mobile & Tech</h2>
-    <p>Direct sourcing for flagship iPhones and elite devices. Authenticity guaranteed.</p>
-  </div>
+    <div class="card">
+        <div class="img-placeholder re-bg">
+            <strong>PROPERTY</strong>
+            <small style="opacity: 0.7">Abuja • Lagos • Dubai</small>
+        </div>
+        <h2>Real Estate</h2>
+        <p>Bespoke brokerage for the world's most prestigious off-market listings.</p>
+    </div>
 
-  <a href="#" class="btn">BOOK CONSULTATION</a>
+    <div class="card">
+        <div class="img-placeholder tech-bg">
+            <strong>TECH</strong>
+            <small style="opacity: 0.7">Flagship Devices Only</small>
+        </div>
+        <h2>Mobile Concierge</h2>
+        <p>Direct global sourcing for limited edition iPhones and premium tech.</p>
+    </div>
 
-  <footer>&copy; 2026 KEEM FOREIGN. CURATED FOR THE ELITE.</footer>
-</div>
+    <a href="#" class="btn">BOOK CONSULTATION</a>
+
+    <footer>
+        &copy; 2026 KEEM FOREIGN. CURATED FOR THE ELITE.
+    </footer>
 
 </body>
 </html>
