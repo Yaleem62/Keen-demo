@@ -4,786 +4,159 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KEEM FOREIGN — Curated for the Elite</title>
-
-  <!-- Playfair Display (editorial serif) + DM Sans (refined body) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
 
   <style>
-    /* ══════════════════════════════════════════
-       DESIGN TOKENS — Edit colours here first
-    ══════════════════════════════════════════ */
     :root {
-      /* Backgrounds */
-      --zinc:          #09090b;   /* Deep Zinc base */
-      --zinc-1:        #111113;
-      --zinc-2:        #18181b;
-      --zinc-3:        #27272a;
-
-      /* Accent — Vibrant Emerald */
-      --em:            #10b981;
-      --em-light:      #34d399;
-      --em-dim:        rgba(16,185,129,0.12);
-      --em-glow:       rgba(16,185,129,0.40);
-      --em-border:     rgba(16,185,129,0.22);
-
-      /* Electric Blue secondary accent */
-      --blue:          #3b82f6;
-      --blue-glow:     rgba(59,130,246,0.35);
-
-      /* Glass surfaces */
-      --glass:         rgba(255,255,255,0.042);
-      --glass-hover:   rgba(255,255,255,0.075);
-      --glass-border:  rgba(255,255,255,0.08);
-      --glass-strong:  rgba(9,9,11,0.72);
-
-      /* Typography */
-      --txt:           #f4f4f5;
-      --txt-2:         #a1a1aa;
-      --txt-3:         #52525b;
-
-      /* Fonts */
-      --serif:         'Playfair Display', Georgia, serif;
-      --sans:          'DM Sans', system-ui, sans-serif;
-
-      /* Motion */
-      --ease:          cubic-bezier(0.4, 0, 0.2, 1);
-      --ease-out:      cubic-bezier(0, 0, 0.2, 1);
+      --zinc: #09090b;
+      --emerald: #10b981;
+      --glass: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --txt: #f4f4f5;
     }
 
-    /* ══════════════════════════════════════════
-       RESET
-    ══════════════════════════════════════════ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--zinc);
+      background-color: var(--zinc);
       color: var(--txt);
-      font-family: var(--sans);
-      font-weight: 300;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
+      font-family: 'Inter', sans-serif;
       overflow-x: hidden;
-    }
-    a  { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;   /* ← never stretched, always cropped correctly */
+      line-height: 1.6;
     }
 
-    /* ══════════════════════════════════════════
-       PAGE LOAD ANIMATIONS
-    ══════════════════════════════════════════ */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+
+    /* Luxury Header */
+    header {
+      padding: 30px 0;
+      text-align: center;
+      border-bottom: 1px solid var(--glass-border);
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    /* Continuous emerald shimmer for the CTA button */
-    @keyframes emShimmer {
-      0%   { background-position: -250% center; }
-      100% { background-position: 250% center; }
-    }
-    /* WhatsApp FAB pulse ring */
-    @keyframes waPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.55); }
-      60%       { box-shadow: 0 0 0 16px rgba(37,211,102,0); }
-    }
-    /* Slow ambient blob drift */
-    @keyframes blobA {
-      0%   { transform: translate(0,0) scale(1); }
-      100% { transform: translate(100px,60px) scale(1.12); }
-    }
-    @keyframes blobB {
-      0%   { transform: translate(0,0) scale(1); }
-      100% { transform: translate(-70px,-50px) scale(1.08); }
-    }
-    @keyframes blobC {
-      0%   { transform: translate(0,0); }
-      50%  { transform: translate(50px,-30px); }
-      100% { transform: translate(-30px,50px); }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      letter-spacing: 4px;
+      color: var(--emerald);
+      text-transform: uppercase;
     }
 
-    /* Staggered reveal helpers */
-    .r  { opacity: 0; animation: fadeUp 0.95s var(--ease) forwards; }
-    .d1 { animation-delay: 0.08s; }
-    .d2 { animation-delay: 0.22s; }
-    .d3 { animation-delay: 0.36s; }
-    .d4 { animation-delay: 0.50s; }
-    .d5 { animation-delay: 0.64s; }
-    .d6 { animation-delay: 0.78s; }
-
-    /* ══════════════════════════════════════════
-       AMBIENT MESH BACKGROUND
-    ══════════════════════════════════════════ */
-    .mesh {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(100px);
-      will-change: transform;
-      opacity: 0.9;
-    }
-    /* Emerald — top-left */
-    .blob-a {
-      width: 600px; height: 600px;
-      top: -180px; left: -180px;
-      background: radial-gradient(circle, rgba(16,185,129,0.11) 0%, transparent 70%);
-      animation: blobA 20s ease-in-out infinite alternate;
-    }
-    /* Blue — bottom-right */
-    .blob-b {
-      width: 520px; height: 520px;
-      bottom: -140px; right: -140px;
-      background: radial-gradient(circle, rgba(59,130,246,0.09) 0%, transparent 70%);
-      animation: blobB 24s ease-in-out infinite alternate;
-    }
-    /* Subtle emerald centre */
-    .blob-c {
-      width: 400px; height: 400px;
-      top: 38%; left: 32%;
-      background: radial-gradient(circle, rgba(16,185,129,0.055) 0%, transparent 70%);
-      animation: blobC 30s ease-in-out infinite alternate;
-    }
-    /* Fine grain noise overlay */
-    .mesh::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      opacity: 1;
-    }
-
-    /* ══════════════════════════════════════════
-       LAYOUT
-    ══════════════════════════════════════════ */
-    .page   { position: relative; z-index: 1; }
-    .wrap   {
-      max-width: 1120px;
-      margin-inline: auto;
-      padding-inline: clamp(18px, 5vw, 52px);
-    }
-
-    /* ══════════════════════════════════════════
-       GLASS CARD MIXIN
-    ══════════════════════════════════════════ */
-    .glass {
-      background: var(--glass);
-      backdrop-filter: blur(12px) saturate(150%);   /* ← true glass blur */
-      -webkit-backdrop-filter: blur(12px) saturate(150%);
-      border: 1px solid var(--glass-border);
-      border-radius: 18px;
-      transition:
-        background  0.38s var(--ease),
-        border-color 0.38s var(--ease),
-        box-shadow  0.38s var(--ease),
-        transform   0.38s var(--ease);
-    }
-    .glass:hover {
-      background: var(--glass-hover);
-      border-color: var(--em-border);
-      box-shadow: 0 0 0 1px rgba(16,185,129,0.08) inset,
-                  0 28px 80px rgba(0,0,0,0.55);
-      transform: translateY(-3px);
-    }
-
-    /* ══════════════════════════════════════════
-       FLOATING WHATSAPP FAB
-    ══════════════════════════════════════════ */
-    .wa-fab {
-      position: fixed;
-      bottom: 26px;
-      right: 22px;
-      z-index: 9000;
-      width: 58px; height: 58px;
-      border-radius: 50%;
-      background: #25D366;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 28px rgba(37,211,102,0.42);
-      animation: fadeIn 1s 1.8s both, waPulse 3.2s 2.5s infinite;
-      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-      cursor: pointer;
-    }
-    .wa-fab:hover {
-      transform: scale(1.1) translateY(-3px);
-      box-shadow: 0 14px 42px rgba(37,211,102,0.58);
-    }
-    .wa-fab svg { width: 28px; height: 28px; fill: #fff; }
-    /* Tooltip */
-    .wa-fab::before {
-      content: 'Chat on WhatsApp';
-      position: absolute;
-      right: 66px; top: 50%;
-      transform: translateY(-50%);
-      white-space: nowrap;
-      background: var(--glass-strong);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(37,211,102,0.25);
-      color: var(--txt);
-      font-family: var(--sans);
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      padding: 7px 14px;
-      border-radius: 6px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-    }
-    .wa-fab:hover::before { opacity: 1; }
-
-    /* ══════════════════════════════════════════
-       HEADER
-    ══════════════════════════════════════════ */
-    .hdr {
-      position: sticky; top: 0; z-index: 500;
-      background: rgba(9,9,11,0.78);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      animation: fadeIn 0.6s ease both;
-    }
-    .hdr-inner {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      height: 70px;
-    }
-
-    /* Logo mark — geometric diamond */
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-gem {
-      width: 36px; height: 36px;
-      position: relative; flex-shrink: 0;
-    }
-    .logo-gem::before, .logo-gem::after {
-      content: '';
-      position: absolute;
-      border-radius: 3px;
-    }
-    .logo-gem::before {
-      inset: 0;
-      border: 1.5px solid var(--em);
-      transform: rotate(45deg);
-    }
-    .logo-gem::after {
-      inset: 9px;
-      background: var(--em);
-      opacity: 0.55;
-      transform: rotate(45deg);
-    }
-    .logo-txt { display: flex; flex-direction: column; gap: 2px; }
-    /* Edit: brand name */
-    .logo-name {
-      font-family: var(--serif);
-      font-size: 1.12rem; font-weight: 700;
-      letter-spacing: 0.18em;
-      color: var(--txt); line-height: 1;
-    }
-    /* Edit: tagline */
-    .logo-tag {
-      font-size: 0.5rem; font-weight: 500;
-      letter-spacing: 0.34em; text-transform: uppercase;
-      color: var(--txt-3); line-height: 1;
-    }
-
-    /* Nav */
-    .nav { display: flex; align-items: center; gap: 26px; }
-    .nav a {
-      font-size: 0.68rem; font-weight: 500;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--txt-2);
-      transition: color 0.25s ease;
-    }
-    .nav a:hover { color: var(--em); }
-    /* Header pill CTA */
-    .nav-pill {
-      font-size: 0.62rem !important; font-weight: 600 !important;
-      letter-spacing: 0.18em !important;
-      color: var(--zinc) !important;
-      background: var(--em);
-      padding: 9px 20px; border-radius: 50px;
-      transition: background 0.28s, transform 0.28s,
-                  box-shadow 0.28s !important;
-    }
-    .nav-pill:hover {
-      background: var(--em-light) !important;
-      color: var(--zinc) !important;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px var(--em-glow) !important;
-    }
-    .nav-desktop { display: flex; align-items: center; gap: 26px; }
-
-    /* ══════════════════════════════════════════
-       HERO — full-bleed background image
-    ══════════════════════════════════════════ */
+    /* Hero Section */
     .hero {
       position: relative;
-      min-height: 96vh;
-      display: flex; align-items: center;
-      padding-block: 120px 90px;
+      height: 400px;
+      border-radius: 20px;
+      margin: 20px 0;
       overflow: hidden;
-    }
-
-    /* ─── HERO BACKGROUND IMAGE (Luxury Mansion) ─── */
-    .hero-bg {
-      position: absolute; inset: 0;
-      z-index: 0;
-    }
-    .hero-bg img {
-      /* object-fit: cover is set globally above */
-      filter: brightness(0.35) saturate(0.7);
-    }
-    /* Cinematic dark gradient over photo */
-    .hero-bg::after {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(to right,  rgba(9,9,11,0.92) 0%, rgba(9,9,11,0.50) 60%, transparent 100%),
-        linear-gradient(to top,    rgba(9,9,11,0.80) 0%, transparent 50%);
-    }
-
-    .hero-content {
-      position: relative; z-index: 1;
-      max-width: 680px;
-    }
-
-    /* Thin vertical rule */
-    .v-rule {
-      width: 1px; height: 52px;
-      background: linear-gradient(to bottom, transparent, var(--em), transparent);
-      margin-bottom: 28px;
-      animation: fadeIn 1.2s 0.2s both;
-    }
-
-    /* Edit: eyebrow */
-    .hero-eye {
-      font-size: 0.60rem; font-weight: 600;
-      letter-spacing: 0.38em; text-transform: uppercase;
-      color: var(--em); display: block; margin-bottom: 20px;
-    }
-
-    /* Edit: hero headline */
-    .hero-h1 {
-      font-family: var(--serif);
-      font-size: clamp(2.8rem, 6.5vw, 5.8rem);
-      font-weight: 500; line-height: 1.06;
-      letter-spacing: -0.015em;
-      color: var(--txt); margin-bottom: 10px;
-    }
-    .hero-h1 em { font-style: italic; color: var(--em); }
-
-    /* Edit: sub-headline */
-    .hero-sub-h {
-      font-family: var(--serif);
-      font-size: clamp(1rem, 2vw, 1.45rem);
-      font-weight: 400; font-style: italic;
-      color: var(--txt-2); margin-bottom: 24px;
-      letter-spacing: 0.02em;
-    }
-
-    /* Edit: hero body copy */
-    .hero-body {
-      font-size: 0.88rem; font-weight: 300;
-      line-height: 1.88; color: var(--txt-2);
-      max-width: 460px; margin-bottom: 48px;
-      letter-spacing: 0.02em;
-    }
-
-    /* CTA row */
-    .cta-row {
-      display: flex; flex-wrap: wrap; gap: 14px;
+      display: flex;
       align-items: center;
+      justify-content: center;
+      text-align: center;
     }
-
-    /* ─── EMERALD SHIMMER BUTTON ─── */
-    .btn-em {
-      position: relative; overflow: hidden;
-      font-family: var(--sans);
-      font-size: 0.72rem; font-weight: 600;
-      letter-spacing: 0.20em; text-transform: uppercase;
-      color: var(--zinc); cursor: pointer;
-      padding: 17px 48px; border: none; border-radius: 50px;
-      background: linear-gradient(
-        105deg,
-        var(--em) 0%, var(--em-light) 35%,
-        #059669 60%, var(--em) 100%
-      );
-      background-size: 250% 100%;
-      /* Shimmer loops every 3.5 s */
-      animation: emShimmer 3.5s linear 1.5s infinite;
-      /* Accent glow on button */
-      box-shadow: 0 0 28px var(--em-glow), 0 8px 30px rgba(0,0,0,0.4);
-      transition: transform 0.30s var(--ease), box-shadow 0.30s var(--ease);
-    }
-    .btn-em:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 0 44px var(--em-glow), 0 16px 46px rgba(0,0,0,0.5);
-    }
-    .btn-em:active { transform: translateY(0) scale(1); }
-
-    /* Ghost secondary */
-    .btn-ghost {
-      font-family: var(--sans);
-      font-size: 0.70rem; font-weight: 500;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--txt-2); cursor: pointer;
-      padding: 17px 34px; border-radius: 50px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: transparent;
-      transition: all 0.28s var(--ease);
-    }
-    .btn-ghost:hover {
-      border-color: var(--em-border);
-      color: var(--em);
-      background: var(--em-dim);
-    }
-
-    /* Trust strip below hero CTAs */
-    .trust {
-      margin-top: 64px;
-      padding-top: 36px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      display: flex; flex-wrap: wrap; gap: 28px;
-    }
-    .trust-item {
-      display: flex; align-items: center; gap: 9px;
-      font-size: 0.63rem; font-weight: 500;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--txt-3);
-    }
-    .trust-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--em); opacity: 0.7; flex-shrink: 0;
-    }
-
-    /* ══════════════════════════════════════════
-       SECTION UTILITIES
-    ══════════════════════════════════════════ */
-    .sec-pad { padding-block: 100px; }
-    .sec-label {
-      display: flex; align-items: center; gap: 13px;
-      font-size: 0.57rem; font-weight: 600;
-      letter-spacing: 0.36em; text-transform: uppercase;
-      color: var(--em); margin-bottom: 22px;
-    }
-    .sec-label::after {
-      content: '';
-      flex: 1; height: 1px;
-      background: linear-gradient(to right, var(--em-border), transparent);
-    }
-
-    /* ══════════════════════════════════════════
-       REAL ESTATE SECTION
-    ══════════════════════════════════════════ */
-
-    /* Large feature card — image + copy side by side */
-    .re-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 560px;
-      overflow: hidden;
-    }
-
-    .re-img {
-      position: relative;
-      overflow: hidden;
-      border-radius: 18px 0 0 18px;
-      /* Fixed height on mobile via aspect-ratio */
-    }
-    /* ─── PROPERTIES IMAGE ─── */
-    .re-img img {
-      transition: transform 0.7s var(--ease);
-      filter: brightness(0.80) saturate(0.85);
-    }
-    .re-card:hover .re-img img { transform: scale(1.05); }
-
-    /* Gradient bleed into copy panel */
-    .re-img::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to right, transparent 55%, rgba(9,9,11,0.65) 100%
-      );
-      pointer-events: none;
-    }
-
-    /* "Active Listings" live badge */
-    .live-badge {
-      position: absolute; top: 18px; left: 18px; z-index: 2;
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 0.57rem; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--txt);
-      background: var(--glass-strong);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(16,185,129,0.28);
-      padding: 7px 14px; border-radius: 50px;
-    }
-    .live-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: #4ade80;
-      animation: waPulse 2.2s infinite;
-    }
-
-    /* Copy pane */
-    .re-copy {
-      padding: 52px 46px;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    /* Edit: RE card heading */
-    .re-copy h2 {
-      font-family: var(--serif);
-      font-size: clamp(1.75rem, 2.8vw, 2.6rem);
-      font-weight: 500; line-height: 1.12;
-      color: var(--txt); margin-bottom: 18px;
-    }
-    .re-copy h2 em { font-style: italic; color: var(--em); }
-    /* Edit: RE description */
-    .re-copy p {
-      font-size: 0.82rem; font-weight: 300;
-      line-height: 1.9; color: var(--txt-2); margin-bottom: 28px;
-    }
-
-    /* Spec tag pills */
-    .pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 32px; }
-    .pill {
-      font-size: 0.60rem; font-weight: 500;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--em);
-      border: 1px solid var(--em-border);
-      padding: 5px 14px; border-radius: 50px;
-      background: var(--em-dim);
-      transition: background 0.25s, border-color 0.25s;
-    }
-    .pill:hover {
-      background: rgba(16,185,129,0.20);
-      border-color: rgba(16,185,129,0.5);
-    }
-
-    /* Key stats row */
-    .re-stats {
-      display: flex; gap: 28px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .stat-val {
-      font-family: var(--serif);
-      font-size: 1.75rem; font-weight: 400;
-      color: var(--em); display: block; line-height: 1;
-    }
-    .stat-lbl {
-      font-size: 0.58rem; font-weight: 500;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--txt-3); margin-top: 5px; display: block;
-    }
-
-    /* Three small listing cards below */
-    .listing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px; margin-top: 14px;
-    }
-    .l-card {
-      position: relative; border-radius: 12px;
-      overflow: hidden; aspect-ratio: 4/3; cursor: pointer;
-    }
-    .l-card img {
-      filter: brightness(0.72) saturate(0.8);
-      transition: transform 0.55s var(--ease), filter 0.55s var(--ease);
-    }
-    .l-card:hover img {
-      transform: scale(1.07);
-      filter: brightness(0.88) saturate(1);
-    }
-    .l-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(9,9,11,0.88) 0%, transparent 55%);
-      display: flex; flex-direction: column;
-      justify-content: flex-end; padding: 16px;
-    }
-    /* Edit: listing location & price */
-    .l-loc {
-      font-size: 0.58rem; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--em); margin-bottom: 3px;
-    }
-    .l-price {
-      font-family: var(--serif);
-      font-size: 1.08rem; font-weight: 400;
-      color: var(--txt); line-height: 1;
-    }
-
-    /* ══════════════════════════════════════════
-       TECH CONCIERGE SECTION
-    ══════════════════════════════════════════ */
-    .tech-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 540px;
-      overflow: hidden;
-    }
-    .tech-copy {
-      padding: 52px 46px;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    /* Edit: tech heading */
-    .tech-copy h2 {
-      font-family: var(--serif);
-      font-size: clamp(1.75rem, 2.8vw, 2.6rem);
-      font-weight: 500; line-height: 1.12;
-      color: var(--txt); margin-bottom: 18px;
-    }
-    .tech-copy h2 em { font-style: italic; color: var(--blue); }
-    /* Edit: tech body copy */
-    .tech-copy p {
-      font-size: 0.82rem; font-weight: 300;
-      line-height: 1.9; color: var(--txt-2); margin-bottom: 28px;
-    }
-
-    /* Device feature list */
-    .dev-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
-    .dev-item {
-      display: flex; align-items: center; gap: 14px;
-      font-size: 0.78rem; color: var(--txt-2); font-weight: 300;
-    }
-    .dev-icon {
-      width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
-      background: rgba(59,130,246,0.10);
-      border: 1px solid rgba(59,130,246,0.20);
-      display: flex; align-items: center;
-      justify-content: center; font-size: 1rem;
-    }
-    .dev-name {
-      font-weight: 600; color: var(--txt);
-      font-size: 0.76rem; display: block; margin-bottom: 1px;
-    }
-    .dev-spec { font-size: 0.64rem; color: var(--txt-3); }
-
-    /* Blue-tinted link button */
-    .btn-blue-ghost {
-      font-family: var(--sans);
-      font-size: 0.68rem; font-weight: 600;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--blue);
-      border: 1px solid rgba(59,130,246,0.30);
-      padding: 13px 26px; border-radius: 50px;
-      background: transparent; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 8px;
-      align-self: flex-start;
-      transition: all 0.28s var(--ease);
-      /* Glow on button */
-      box-shadow: 0 0 0 0 var(--blue-glow);
-    }
-    .btn-blue-ghost:hover {
-      background: rgba(59,130,246,0.08);
-      border-color: rgba(59,130,246,0.55);
-      box-shadow: 0 0 20px var(--blue-glow);
-      gap: 14px;
-    }
-
-    /* ─── TECH / IPHONE IMAGE ─── */
-    .tech-img {
-      position: relative; overflow: hidden;
-      border-radius: 0 18px 18px 0;
-    }
-    .tech-img img {
-      filter: brightness(0.78) saturate(0.85);
-      transition: transform 0.7s var(--ease);
-    }
-    .tech-card:hover .tech-img img { transform: scale(1.05); }
-    /* Gradient bleed */
-    .tech-img::before {
-      content: '';
-      position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(
-        to left, transparent 50%, rgba(9,9,11,0.58) 100%
-      );
-      pointer-events: none;
-    }
-    /* Floating info card on image */
-    .tech-float {
-      position: absolute; bottom: 22px; right: 22px; z-index: 2;
-      background: var(--glass-strong);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(59,130,246,0.28);
-      border-radius: 12px; padding: 16px 20px; min-width: 175px;
-    }
-    /* Edit: floating card label and value */
-    .tf-label {
-      font-size: 0.54rem; font-weight: 600;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--blue); margin-bottom: 6px; display: block;
-    }
-    .tf-val {
-      font-family: var(--serif);
-      font-size: 1.15rem; font-weight: 500;
-      color: var(--txt); display: block; line-height: 1;
-    }
-
-    /* ══════════════════════════════════════════
-       CONSULTATION / CTA SECTION
-    ══════════════════════════════════════════ */
-    .sec-cta { padding-block: 110px; text-align: center; position: relative; }
-
-    /* Subtle emerald radial under section */
-    .sec-cta::before {
-      content: '';
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px; height: 400px;
-      background: radial-gradient(ellipse, rgba(16,185,129,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Art-deco corner frame */
-    .cta-box {
-      position: relative; z-index: 1;
-      max-width: 720px; margin-inline: auto;
-      padding: 72px 48px;
-    }
-    .cta-box::before, .cta-box::after {
-      content: '';
+    .hero img {
       position: absolute;
-      width: 44px; height: 44px;
-      border-color: rgba(16,185,129,0.28);
-      border-style: solid;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.4);
     }
-    .cta-box::before { top: 0; left: 0; border-width: 1px 0 0 1px; }
-    .cta-box::after  { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+    .hero-content { position: relative; z-index: 2; padding: 20px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 10px; }
 
-    /* Edit: CTA eyebrow */
-    .cta-eye {
-      font-size: 0.58rem; font-weight: 600;
-      letter-spacing: 0.36em; text-transform: uppercase;
-      color: var(--em); display: block; margin-bottom: 22px;
+    /* Glass Cards */
+    .section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--emerald);
+      margin: 40px 0 20px;
     }
-    /* Edit: CTA heading */
-    .cta-h2 {
-      font-family: var(--serif);
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 400; line-height: 1.10;
-      color: var(--txt); margin-bottom: 18px;
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
-    .cta-h2 em { font-style: italic; color: var(--em); }
-    /* Edit: CTA body */
-    .cta-body {
-      font-size: 0.84rem; font-weight: 300;
-      line-height: 1.9; color: var(--txt-2);
-      max-width: 420px; margin-inline: auto;
-      margin-bottom: 44px; letter-spacing: 0.02em;
+    .card img {
+      width: 100%;
+      height: 200px;
+      border-radius: 15px;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+    .card h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 10px; }
+    .card p { font-size: 14px; color: #a1a1aa; margin-bottom: 15px; }
+
+    /* Shimmer Button */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(90deg, #10b981, #34d399, #10b981);
+      background-size: 200% auto;
+      color: #000;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 50px;
+      animation: shimmer 3s infinite;
+      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+    }
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      font-size: 12px;
+      color: #52525b;
+      border-top: 1px solid var(--glass-border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="logo">KEEM FOREIGN</div>
+    </header>
+
+    <section class="hero">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Mansion">
+      <div class="hero-content">
+        <h1>The Gold Standard</h1>
+        <p>Properties & Tech Concierge</p>
+      </div>
+    </section>
+
+    <div class="section-title">Our Divisions</div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="Real Estate">
+      <h3>Luxury Real Estate</h3>
+      <p>Exclusive access to off-market listings in Abuja, Lagos, and Dubai.</p>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1556656793-062ff9878258?auto=format&fit=crop&w=800&q=80" alt="Iphone">
+      <h3>Tech Concierge</h3>
+      <p>Sourcing the latest flagship iPhones and limited tech globally.</p>
+    </div>
+
+    <a href="https://wa.me/2348000000000" class="btn">BOOK CONSULTATION</a>
+
+    <footer>
+      &copy; 2026 KEEM FOREIGN. Curated for the Elite.
+    </footer>
+  </div>
+
+</body>
+</html>
     }
     /* Edit: disclaimer line */
     .cta-fine {
