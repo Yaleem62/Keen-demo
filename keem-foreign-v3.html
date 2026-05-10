@@ -3,584 +3,111 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KEEM FOREIGN — Curated for the Elite</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
-
+  <title>KEEM FOREIGN — Elite</title>
   <style>
     :root {
       --zinc: #09090b;
       --emerald: #10b981;
-      --glass: rgba(255, 255, 255, 0.03);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --txt: #f4f4f5;
+      --glass: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: var(--zinc);
-      color: var(--txt);
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
+      color: #f4f4f5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       line-height: 1.6;
     }
 
-    .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+    .container { padding: 20px; max-width: 450px; margin: 0 auto; }
 
-    /* Luxury Header */
     header {
-      padding: 30px 0;
+      padding: 40px 0 20px;
       text-align: center;
-      border-bottom: 1px solid var(--glass-border);
-    }
-    .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      letter-spacing: 4px;
+      letter-spacing: 5px;
+      font-weight: 700;
       color: var(--emerald);
-      text-transform: uppercase;
     }
 
-    /* Hero Section */
-    .hero {
-      position: relative;
-      height: 400px;
-      border-radius: 20px;
-      margin: 20px 0;
-      overflow: hidden;
+    /* Vibrant Gradient Placeholders that won't break */
+    .img-box {
+      width: 100%;
+      height: 220px;
+      border-radius: 15px;
+      margin-bottom: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
-    .hero img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.4);
-    }
-    .hero-content { position: relative; z-index: 2; padding: 20px; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 10px; }
+    
+    .hero-img { background: linear-gradient(135deg, #064e3b 0%, #10b981 100%); height: 280px; }
+    .re-img   { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); }
+    .tech-img { background: linear-gradient(135deg, #18181b 0%, #3f3f46 100%); }
 
-    /* Glass Cards */
-    .section-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--emerald);
-      margin: 40px 0 20px;
-    }
     .card {
       background: var(--glass);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
       border-radius: 20px;
       padding: 20px;
       margin-bottom: 20px;
     }
-    .card img {
-      width: 100%;
-      height: 200px;
-      border-radius: 15px;
-      object-fit: cover;
-      margin-bottom: 15px;
-    }
-    .card h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 10px; }
-    .card p { font-size: 14px; color: #a1a1aa; margin-bottom: 15px; }
 
-    /* Shimmer Button */
+    h2 { font-size: 24px; margin-bottom: 8px; color: #fff; }
+    p { color: #a1a1aa; font-size: 14px; margin-bottom: 15px; }
+
     .btn {
       display: block;
       width: 100%;
-      padding: 18px;
-      background: linear-gradient(90deg, #10b981, #34d399, #10b981);
-      background-size: 200% auto;
+      padding: 20px;
+      background: var(--emerald);
       color: #000;
       text-align: center;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       border-radius: 50px;
-      animation: shimmer 3s infinite;
-      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
-    }
-    @keyframes shimmer {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      margin-top: 30px;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+      transition: 0.3s;
     }
 
     footer {
       text-align: center;
       padding: 40px 0;
-      font-size: 12px;
+      font-size: 11px;
       color: #52525b;
-      border-top: 1px solid var(--glass-border);
+      letter-spacing: 1px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <div class="logo">KEEM FOREIGN</div>
-    </header>
+<div class="container">
+  <header>KEEM FOREIGN</header>
 
-    <section class="hero">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Mansion">
-      <div class="hero-content">
-        <h1>The Gold Standard</h1>
-        <p>Properties & Tech Concierge</p>
-      </div>
-    </section>
+  <div class="img-box hero-img">THE GOLD STANDARD</div>
 
-    <div class="section-title">Our Divisions</div>
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="Real Estate">
-      <h3>Luxury Real Estate</h3>
-      <p>Exclusive access to off-market listings in Abuja, Lagos, and Dubai.</p>
-    </div>
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1556656793-062ff9878258?auto=format&fit=crop&w=800&q=80" alt="Iphone">
-      <h3>Tech Concierge</h3>
-      <p>Sourcing the latest flagship iPhones and limited tech globally.</p>
-    </div>
-
-    <a href="https://wa.me/2348000000000" class="btn">BOOK CONSULTATION</a>
-
-    <footer>
-      &copy; 2026 KEEM FOREIGN. Curated for the Elite.
-    </footer>
+  <div class="card">
+    <div class="img-box re-img">LUXURY PROPERTIES</div>
+    <h2>Real Estate</h2>
+    <p>Exclusive off-market listings in Abuja & Dubai. Curated for the high-end investor.</p>
   </div>
 
-</body>
-</html>
-    }
-    /* Edit: disclaimer line */
-    .cta-fine {
-      margin-top: 18px;
-      font-size: 0.58rem; letter-spacing: 0.14em;
-      color: var(--txt-3);
-    }
-
-    /* ══════════════════════════════════════════
-       FOOTER
-    ══════════════════════════════════════════ */
-    .footer {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-block: 40px;
-    }
-    .foot-inner {
-      display: flex; flex-wrap: wrap;
-      align-items: center; justify-content: space-between;
-      gap: 18px;
-    }
-    /* Edit: copyright — year updated to 2026 */
-    .foot-copy {
-      font-size: 0.60rem; letter-spacing: 0.12em;
-      color: var(--txt-3);
-    }
-    .foot-copy strong { color: var(--em); font-weight: 500; }
-    .foot-links { display: flex; gap: 22px; flex-wrap: wrap; }
-    .foot-links a {
-      font-size: 0.60rem; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--txt-3);
-      transition: color 0.25s ease;
-    }
-    .foot-links a:hover { color: var(--em); }
-
-    /* ══════════════════════════════════════════
-       RESPONSIVE — ≤ 768 px
-    ══════════════════════════════════════════ */
-    @media (max-width: 768px) {
-      .nav-desktop { display: none; }
-      .hdr-inner { height: 64px; }
-
-      /* Hero */
-      .hero { min-height: auto; padding-block: 100px 70px; }
-      .hero-content { max-width: 100%; }
-
-      /* RE main card */
-      .re-card { grid-template-columns: 1fr; }
-      .re-img   { border-radius: 18px 18px 0 0; aspect-ratio: 16/9; }
-      .re-copy  { padding: 34px 26px 38px; }
-      .re-stats { gap: 18px; flex-wrap: wrap; }
-
-      /* Listing grid: single column */
-      .listing-grid { grid-template-columns: 1fr; }
-
-      /* Tech card */
-      .tech-card { grid-template-columns: 1fr; }
-      .tech-copy { padding: 34px 26px 32px; }
-      .tech-img  { border-radius: 0 0 18px 18px; aspect-ratio: 4/3; min-height: 260px; }
-      .tech-img::before {
-        background: linear-gradient(to top, rgba(9,9,11,0.7) 0%, transparent 55%);
-      }
-
-      /* CTA */
-      .cta-box { padding: 48px 22px; }
-
-      /* Footer */
-      .foot-inner { flex-direction: column; text-align: center; }
-      .foot-links { justify-content: center; }
-    }
-
-    @media (max-width: 420px) {
-      .cta-row { flex-direction: column; align-items: stretch; }
-      .btn-em, .btn-ghost { text-align: center; }
-      .trust { gap: 16px; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- ════════ AMBIENT MESH BACKGROUND ════════ -->
-  <div class="mesh" aria-hidden="true">
-    <div class="blob blob-a"></div>
-    <div class="blob blob-b"></div>
-    <div class="blob blob-c"></div>
+  <div class="card">
+    <div class="img-box tech-img">TECH CONCIERGE</div>
+    <h2>Mobile & Tech</h2>
+    <p>Direct sourcing for flagship iPhones and elite devices. Authenticity guaranteed.</p>
   </div>
 
-  <!-- ════════ FLOATING WHATSAPP FAB ════════ -->
-  <!--
-    ✏️ EDIT: Replace +2348000000000 with the real WhatsApp number
-    Format: https://wa.me/[country-code][number]  (no + or spaces)
-  -->
-  <a class="wa-fab"
-     href="https://wa.me/2348000000000?text=Hello%20KEEM%20FOREIGN%2C%20I%27d%20like%20to%20book%20a%20private%20consultation."
-     target="_blank" rel="noopener noreferrer"
-     aria-label="Chat with us on WhatsApp">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.531 5.845L.057 23.428a.5.5 0 0 0 .61.61l5.638-1.473A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.847 0-3.587-.47-5.11-1.3l-.365-.213-3.795.991.997-3.703-.233-.376A9.957 9.957 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-    </svg>
-  </a>
+  <a href="#" class="btn">BOOK CONSULTATION</a>
 
-  <div class="page">
-
-    <!-- ════════ HEADER ════════ -->
-    <header class="hdr">
-      <div class="wrap">
-        <div class="hdr-inner">
-
-          <!-- ✏️ Edit: brand name & tagline -->
-          <a class="logo" href="#">
-            <div class="logo-gem" aria-hidden="true"></div>
-            <div class="logo-txt">
-              <span class="logo-name">KEEM FOREIGN</span>
-              <span class="logo-tag">Curated for the Elite</span>
-            </div>
-          </a>
-
-          <!-- ✏️ Edit: nav links -->
-          <nav class="nav-desktop" aria-label="Primary navigation">
-            <a href="#real-estate" class="nav">Properties</a>
-            <a href="#tech" class="nav">Tech Concierge</a>
-            <a href="#consult" class="nav">About</a>
-            <a href="#consult" class="nav-pill nav">Book Now</a>
-          </nav>
-
-        </div>
-      </div>
-    </header>
-
-
-    <!-- ════════ HERO ════════ -->
-    <section class="hero" aria-label="Hero">
-
-      <!-- ✏️ HERO BG IMAGE — Luxury Mansion (confirmed Unsplash URL) -->
-      <div class="hero-bg">
-        <img
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
-          alt=""
-          role="presentation"
-          loading="eager"
-        />
-      </div>
-
-      <div class="wrap">
-        <div class="hero-content">
-
-          <div class="v-rule r d1" aria-hidden="true"></div>
-
-          <!-- ✏️ Edit: eyebrow text -->
-          <span class="hero-eye r d1">Abuja · Lagos · London · Dubai</span>
-
-          <!-- ✏️ Edit: main headline -->
-          <h1 class="hero-h1 r d2">
-            The <em>Gold Standard</em><br>in Properties &amp; Tech.
-          </h1>
-
-          <!-- ✏️ Edit: sub-headline -->
-          <p class="hero-sub-h r d3">Curated for the Elite.</p>
-
-          <!-- ✏️ Edit: hero body copy -->
-          <p class="hero-body r d3">
-            We broker the world's most exceptional real estate and
-            source elite mobile technology — for clients who
-            set their own standard of living.
-          </p>
-
-          <div class="cta-row r d4">
-            <!-- ✏️ Edit: primary CTA button text & href -->
-            <a href="#consult" class="btn-em">Book a Private Consultation</a>
-            <!-- ✏️ Edit: ghost CTA text -->
-            <a href="#real-estate" class="btn-ghost">View Portfolio</a>
-          </div>
-
-          <!-- ✏️ Edit: trust / social proof items -->
-          <div class="trust r d5">
-            <div class="trust-item"><span class="trust-dot"></span>$2.4B+ Portfolio</div>
-            <div class="trust-item"><span class="trust-dot"></span>340+ Deals Closed</div>
-            <div class="trust-item"><span class="trust-dot"></span>12K+ Devices Sourced</div>
-            <div class="trust-item"><span class="trust-dot"></span>Private Clients Only</div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ════════ REAL ESTATE SECTION ════════ -->
-    <section class="sec-pad" id="real-estate" aria-label="Real Estate">
-      <div class="wrap">
-
-        <!-- ✏️ Edit: section label -->
-        <div class="sec-label r d1">Real Estate Division</div>
-
-        <!-- Large feature card -->
-        <div class="re-card glass r d2">
-
-          <div class="re-img">
-            <!-- ✏️ PROPERTIES IMAGE — confirmed Unsplash URL -->
-            <img
-              src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
-              alt="Luxury property — Abuja Listings"
-              loading="lazy"
-            />
-            <span class="live-badge">
-              <span class="live-dot"></span>
-              Active Listings
-            </span>
-          </div>
-
-          <div class="re-copy">
-            <!-- ✏️ Edit: card heading -->
-            <h2>The Portfolio —<br><em>Abuja, Luxury</em> Listings</h2>
-            <!-- ✏️ Edit: card description -->
-            <p>
-              From palatial residences in Maitama and Asokoro to
-              prestigious commercial addresses in Wuse II — we grant
-              discreet access to properties that never appear on the
-              open market.
-            </p>
-            <!-- ✏️ Edit: spec pills (add/remove as needed) -->
-            <div class="pills">
-              <span class="pill">Maitama</span>
-              <span class="pill">Asokoro</span>
-              <span class="pill">Wuse II</span>
-              <span class="pill">Off-Market</span>
-              <span class="pill">Private Villas</span>
-            </div>
-            <!-- ✏️ Edit: stats -->
-            <div class="re-stats">
-              <div>
-                <span class="stat-val">₦4.2B+</span>
-                <span class="stat-lbl">Abuja Listings</span>
-              </div>
-              <div>
-                <span class="stat-val">94%</span>
-                <span class="stat-lbl">Off-Market</span>
-              </div>
-              <div>
-                <span class="stat-val">48hr</span>
-                <span class="stat-lbl">Response Time</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Three mini listing cards — same verified Unsplash URLs -->
-        <div class="listing-grid r d3">
-
-          <!-- ✏️ Edit: listing 1 -->
-          <div class="l-card glass">
-            <img
-              src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=75"
-              alt="Maitama private residence"
-              loading="lazy"
-            />
-            <div class="l-overlay">
-              <span class="l-loc">Maitama, Abuja</span>
-              <span class="l-price">₦850M</span>
-            </div>
-          </div>
-
-          <!-- ✏️ Edit: listing 2 -->
-          <div class="l-card glass">
-            <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=75"
-              alt="Asokoro estate"
-              loading="lazy"
-            />
-            <div class="l-overlay">
-              <span class="l-loc">Asokoro, Abuja</span>
-              <span class="l-price">₦1.2B</span>
-            </div>
-          </div>
-
-          <!-- ✏️ Edit: listing 3 -->
-          <div class="l-card glass">
-            <img
-              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=75"
-              alt="Wuse II commercial property"
-              loading="lazy"
-            />
-            <div class="l-overlay">
-              <span class="l-loc">Wuse II, Abuja</span>
-              <span class="l-price">₦620M</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ════════ TECH CONCIERGE SECTION ════════ -->
-    <section class="sec-pad" id="tech" aria-label="Tech Concierge">
-      <div class="wrap">
-
-        <!-- ✏️ Edit: section label -->
-        <div class="sec-label r d1">Tech Concierge Division</div>
-
-        <div class="tech-card glass r d2">
-
-          <div class="tech-copy">
-            <!-- ✏️ Edit: tech heading -->
-            <h2>Elite Mobile —<br><em>iPhone &amp; iPad</em> Concierge</h2>
-            <!-- ✏️ Edit: tech body copy -->
-            <p>
-              Authenticated flagship iPhones, limited-edition iPads,
-              and bespoke device configurations — sourced globally,
-              delivered with white-glove precision.
-            </p>
-
-            <!-- ✏️ Edit: device items (icon, name, spec) -->
-            <ul class="dev-list">
-              <li class="dev-item">
-                <span class="dev-icon">📱</span>
-                <div>
-                  <span class="dev-name">iPhone 15 Pro Max — Titanium</span>
-                  <span class="dev-spec">Natural &amp; Black · 1TB · Sealed · International</span>
-                </div>
-              </li>
-              <li class="dev-item">
-                <span class="dev-icon">📱</span>
-                <div>
-                  <span class="dev-name">iPhone 15 Pro — Desert Titanium</span>
-                  <span class="dev-spec">256GB · Factory Unlocked · Dual SIM</span>
-                </div>
-              </li>
-              <li class="dev-item">
-                <span class="dev-icon">🖥️</span>
-                <div>
-                  <span class="dev-name">iPad Pro M2 — 12.9″ Space Grey</span>
-                  <span class="dev-spec">Wi-Fi + Cellular · 512GB · With Apple Pencil</span>
-                </div>
-              </li>
-              <li class="dev-item">
-                <span class="dev-icon">⌚</span>
-                <div>
-                  <span class="dev-name">Apple Watch Ultra 2</span>
-                  <span class="dev-spec">49mm · Titanium · Alpine Loop · Sealed</span>
-                </div>
-              </li>
-            </ul>
-
-            <!-- ✏️ Edit: CTA link text -->
-            <a href="#consult" class="btn-blue-ghost">
-              Request a Device &nbsp;→
-            </a>
-          </div>
-
-          <div class="tech-img">
-            <!-- ✏️ MOBILE/iPHONE IMAGE — confirmed Unsplash URL -->
-            <img
-              src="https://images.unsplash.com/photo-1556656793-062ff9878258?auto=format&fit=crop&w=800&q=80"
-              alt="Flagship iPhone — Tech Concierge"
-              loading="lazy"
-            />
-            <!-- Floating badge on image -->
-            <div class="tech-float">
-              <!-- ✏️ Edit: badge label & value -->
-              <span class="tf-label">Latest In Stock</span>
-              <span class="tf-val">iPhone 15 Pro Max</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ════════ CONSULTATION CTA ════════ -->
-    <section class="sec-cta" id="consult" aria-label="Book a Consultation">
-      <div class="wrap">
-        <div class="cta-box glass r d1">
-
-          <!-- ✏️ Edit: eyebrow -->
-          <span class="cta-eye">Private Access — By Appointment Only</span>
-
-          <!-- ✏️ Edit: heading -->
-          <h2 class="cta-h2">
-            Ready to Experience<br>the <em>Difference?</em>
-          </h2>
-
-          <!-- ✏️ Edit: body text -->
-          <p class="cta-body">
-            Schedule a confidential consultation and let our specialists
-            craft a bespoke strategy — whether you're acquiring prime
-            property or building an elite tech portfolio.
-          </p>
-
-          <!-- ✏️ Edit: button href (mailto, booking link, or WhatsApp) -->
-          <a href="mailto:consult@keemforeign.com" class="btn-em r d2">
-            Book a Consultation &nbsp;→
-          </a>
-
-          <!-- ✏️ Edit: fine print -->
-          <p class="cta-fine r d3">
-            All inquiries treated with complete discretion &nbsp;·&nbsp; Response within 24 hours
-          </p>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ════════ FOOTER ════════ -->
-    <footer class="footer">
-      <div class="wrap">
-        <div class="foot-inner">
-          <!-- ✏️ Edit: copyright — year is 2026 -->
-          <p class="foot-copy">
-            &copy; 2026 <strong>KEEM FOREIGN</strong>. All rights reserved.
-            Curated for the Elite.
-          </p>
-          <!-- ✏️ Edit: footer links -->
-          <nav class="foot-links" aria-label="Footer navigation">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Contact</a>
-          </nav>
-        </div>
-      </div>
-    </footer>
-
-  </div><!-- /page -->
+  <footer>&copy; 2026 KEEM FOREIGN. CURATED FOR THE ELITE.</footer>
+</div>
 
 </body>
 </html>
