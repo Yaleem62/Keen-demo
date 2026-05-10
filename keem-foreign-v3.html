@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KEEM FOREIGN — Curated for the Elite</title>
+
+  <!-- Playfair Display (editorial serif) + DM Sans (refined body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══════════════════════════════════════════
+       DESIGN TOKENS — Edit colours here first
+    ══════════════════════════════════════════ */
+    :root {
+      /* Backgrounds */
+      --zinc:          #09090b;   /* Deep Zinc base */
+      --zinc-1:        #111113;
+      --zinc-2:        #18181b;
+      --zinc-3:        #27272a;
+
+      /* Accent — Vibrant Emerald */
+      --em:            #10b981;
+      --em-light:      #34d399;
+      --em-dim:        rgba(16,185,129,0.12);
+      --em-glow:       rgba(16,185,129,0.40);
+      --em-border:     rgba(16,185,129,0.22);
+
+      /* Electric Blue secondary accent */
+      --blue:          #3b82f6;
+      --blue-glow:     rgba(59,130,246,0.35);
+
+      /* Glass surfaces */
+      --glass:         rgba(255,255,255,0.042);
+      --glass-hover:   rgba(255,255,255,0.075);
+      --glass-border:  rgba(255,255,255,0.08);
+      --glass-strong:  rgba(9,9,11,0.72);
+
+      /* Typography */
+      --txt:           #f4f4f5;
+      --txt-2:         #a1a1aa;
+      --txt-3:         #52525b;
+
+      /* Fonts */
+      --serif:         'Playfair Display', Georgia, serif;
+      --sans:          'DM Sans', system-ui, sans-serif;
+
+      /* Motion */
+      --ease:          cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-out:      cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    /* ══════════════════════════════════════════
+       RESET
+    ══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--zinc);
+      color: var(--txt);
+      font-family: var(--sans);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    a  { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;   /* ← never stretched, always cropped correctly */
+    }
+
+    /* ══════════════════════════════════════════
+       PAGE LOAD ANIMATIONS
+    ══════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    /* Continuous emerald shimmer for the CTA button */
+    @keyframes emShimmer {
+      0%   { background-position: -250% center; }
+      100% { background-position: 250% center; }
+    }
+    /* WhatsApp FAB pulse ring */
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.55); }
+      60%       { box-shadow: 0 0 0 16px rgba(37,211,102,0); }
+    }
+    /* Slow ambient blob drift */
+    @keyframes blobA {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(100px,60px) scale(1.12); }
+    }
+    @keyframes blobB {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(-70px,-50px) scale(1.08); }
+    }
+    @keyframes blobC {
+      0%   { transform: translate(0,0); }
+      50%  { transform: translate(50px,-30px); }
+      100% { transform: translate(-30px,50px); }
+    }
+
+    /* Staggered reveal helpers */
+    .r  { opacity: 0; animation: fadeUp 0.95s var(--ease) forwards; }
+    .d1 { animation-delay: 0.08s; }
+    .d2 { animation-delay: 0.22s; }
+    .d3 { animation-delay: 0.36s; }
+    .d4 { animation-delay: 0.50s; }
+    .d5 { animation-delay: 0.64s; }
+    .d6 { animation-delay: 0.78s; }
+
+    /* ══════════════════════════════════════════
+       AMBIENT MESH BACKGROUND
+    ══════════════════════════════════════════ */
+    .mesh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      will-change: transform;
+      opacity: 0.9;
+    }
+    /* Emerald — top-left */
+    .blob-a {
+      width: 600px; height: 600px;
+      top: -180px; left: -180px;
+      background: radial-gradient(circle, rgba(16,185,129,0.11) 0%, transparent 70%);
+      animation: blobA 20s ease-in-out infinite alternate;
+    }
+    /* Blue — bottom-right */
+    .blob-b {
+      width: 520px; height: 520px;
+      bottom: -140px; right: -140px;
+      background: radial-gradient(circle, rgba(59,130,246,0.09) 0%, transparent 70%);
+      animation: blobB 24s ease-in-out infinite alternate;
+    }
+    /* Subtle emerald centre */
+    .blob-c {
+      width: 400px; height: 400px;
+      top: 38%; left: 32%;
+      background: radial-gradient(circle, rgba(16,185,129,0.055) 0%, transparent 70%);
+      animation: blobC 30s ease-in-out infinite alternate;
+    }
+    /* Fine grain noise overlay */
+    .mesh::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 1;
+    }
+
+    /* ══════════════════════════════════════════
+       LAYOUT
+    ══════════════════════════════════════════ */
+    .page   { position: relative; z-index: 1; }
+    .wrap   {
+      max-width: 1120px;
+      margin-inline: auto;
+      padding-inline: clamp(18px, 5vw, 52px);
+    }
+
+    /* ══════════════════════════════════════════
+       GLASS CARD MIXIN
+    ══════════════════════════════════════════ */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(12px) saturate(150%);   /* ← true glass blur */
+      -webkit-backdrop-filter: blur(12px) saturate(150%);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      transition:
+        background  0.38s var(--ease),
+        border-color 0.38s var(--ease),
+        box-shadow  0.38s var(--ease),
+        transform   0.38s var(--ease);
+    }
+    .glass:hover {
+      background: var(--glass-hover);
+      border-color: var(--em-border);
+      box-shadow: 0 0 0 1px rgba(16,185,129,0.08) inset,
+                  0 28px 80px rgba(0,0,0,0.55);
+      transform: translateY(-3px);
+    }
+
+    /* ══════════════════════════════════════════
+       FLOATING WHATSAPP FAB
+    ══════════════════════════════════════════ */
+    .wa-fab {
+      position: fixed;
+      bottom: 26px;
+      right: 22px;
+      z-index: 9000;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 28px rgba(37,211,102,0.42);
+      animation: fadeIn 1s 1.8s both, waPulse 3.2s 2.5s infinite;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      cursor: pointer;
+    }
+    .wa-fab:hover {
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 0 14px 42px rgba(37,211,102,0.58);
+    }
+    .wa-fab svg { width: 28px; height: 28px; fill: #fff; }
+    /* Tooltip */
+    .wa-fab::before {
+      content: 'Chat on WhatsApp';
+      position: absolute;
+      right: 66px; top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      background: var(--glass-strong);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(37,211,102,0.25);
+      color: var(--txt);
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      padding: 7px 14px;
+      border-radius: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .wa-fab:hover::before { opacity: 1; }
+
+    /* ══════════════════════════════════════════
+       HEADER
+    ══════════════════════════════════════════ */
+    .hdr {
+      position: sticky; top: 0; z-index: 500;
+      background: rgba(9,9,11,0.78);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      animation: fadeIn 0.6s ease both;
+    }
+    .hdr-inner {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    /* Logo mark — geometric diamond */
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-gem {
+      width: 36px; height: 36px;
+      position: relative; flex-shrink: 0;
+    }
+    .logo-gem::before, .logo-gem::after {
+      content: '';
+      position: absolute;
+      border-radius: 3px;
+    }
+    .logo-gem::before {
+      inset: 0;
+      border: 1.5px solid var(--em);
+      transform: rotate(45deg);
+    }
+    .logo-gem::after {
+      inset: 9px;
+      background: var(--em);
+      opacity: 0.55;
+      transform: rotate(45deg);
+    }
+    .logo-txt { display: flex; flex-direction: column; gap: 2px; }
+    /* Edit: brand name */
+    .logo-name {
+      font-family: var(--serif);
+      font-size: 1.12rem; font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--txt); line-height: 1;
+    }
+    /* Edit: tagline */
+    .logo-tag {
+      font-size: 0.5rem; font-weight: 500;
+      letter-spacing: 0.34em; text-transform: uppercase;
+      color: var(--txt-3); line-height: 1;
+    }
+
+    /* Nav */
+    .nav { display: flex; align-items: center; gap: 26px; }
+    .nav a {
+      font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--txt-2);
+      transition: color 0.25s ease;
+    }
+    .nav a:hover { color: var(--em); }
+    /* Header pill CTA */
+    .nav-pill {
+      font-size: 0.62rem !important; font-weight: 600 !important;
+      letter-spacing: 0.18em !important;
+      color: var(--zinc) !important;
+      background: var(--em);
+      padding: 9px 20px; border-radius: 50px;
+      transition: background 0.28s, transform 0.28s,
+                  box-shadow 0.28s !important;
+    }
+    .nav-pill:hover {
+      background: var(--em-light) !important;
+      color: var(--zinc) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px var(--em-glow) !important;
+    }
+    .nav-desktop { display: flex; align-items: center; gap: 26px; }
+
+    /* ══════════════════════════════════════════
+       HERO — full-bleed background image
+    ══════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 96vh;
+      display: flex; align-items: center;
+      padding-block: 120px 90px;
+      overflow: hidden;
+    }
+
+    /* ─── HERO BACKGROUND IMAGE (Luxury Mansion) ─── */
+    .hero-bg {
+      position: absolute; inset: 0;
+      z-index: 0;
+    }
+    .hero-bg img {
+      /* object-fit: cover is set globally above */
+      filter: brightness(0.35) saturate(0.7);
+    }
+    /* Cinematic dark gradient over photo */
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right,  rgba(9,9,11,0.92) 0%, rgba(9,9,11,0.50) 60%, transparent 100%),
+        linear-gradient(to top,    rgba(9,9,11,0.80) 0%, transparent 50%);
+    }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 680px;
+    }
+
+    /* Thin vertical rule */
+    .v-rule {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, transparent, var(--em), transparent);
+      margin-bottom: 28px;
+      animation: fadeIn 1.2s 0.2s both;
+    }
+
+    /* Edit: eyebrow */
+    .hero-eye {
+      font-size: 0.60rem; font-weight: 600;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--em); display: block; margin-bottom: 20px;
+    }
+
+    /* Edit: hero headline */
+    .hero-h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6.5vw, 5.8rem);
+      font-weight: 500; line-height: 1.06;
+      letter-spacing: -0.015em;
+      color: var(--txt); margin-bottom: 10px;
+    }
+    .hero-h1 em { font-style: italic; color: var(--em); }
+
+    /* Edit: sub-headline */
+    .hero-sub-h {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2vw, 1.45rem);
+      font-weight: 400; font-style: italic;
+      color: var(--txt-2); margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Edit: hero body copy */
+    .hero-body {
+      font-size: 0.88rem; font-weight: 300;
+      line-height: 1.88; color: var(--txt-2);
+      max-width: 460px; margin-bottom: 48px;
+      letter-spacing: 0.02em;
+    }
+
+    /* CTA row */
+    .cta-row {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      align-items: center;
+    }
+
+    /* ─── EMERALD SHIMMER BUTTON ─── */
+    .btn-em {
+      position: relative; overflow: hidden;
+      font-family: var(--sans);
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.20em; text-transform: uppercase;
+      color: var(--zinc); cursor: pointer;
+      padding: 17px 48px; border: none; border-radius: 50px;
+      background: linear-gradient(
+        105deg,
+        var(--em) 0%, var(--em-light) 35%,
+        #059669 60%, var(--em) 100%
+      );
+      background-size: 250% 100%;
+      /* Shimmer loops every 3.5 s */
+      animation: emShimmer 3.5s linear 1.5s infinite;
+      /* Accent glow on button */
+      box-shadow: 0 0 28px var(--em-glow), 0 8px 30px rgba(0,0,0,0.4);
+      transition: transform 0.30s var(--ease), box-shadow 0.30s var(--ease);
+    }
+    .btn-em:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 0 44px var(--em-glow), 0 16px 46px rgba(0,0,0,0.5);
+    }
+    .btn-em:active { transform: translateY(0) scale(1); }
+
+    /* Ghost secondary */
+    .btn-ghost {
+      font-family: var(--sans);
+      font-size: 0.70rem; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--txt-2); cursor: pointer;
+      padding: 17px 34px; border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: transparent;
+      transition: all 0.28s var(--ease);
+    }
+    .btn-ghost:hover {
+      border-color: var(--em-border);
+      color: var(--em);
+      background: var(--em-dim);
+    }
+
+    /* Trust strip below hero CTAs */
+    .trust {
+      margin-top: 64px;
+      padding-top: 36px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; flex-wrap: wrap; gap: 28px;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 9px;
+      font-size: 0.63rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--txt-3);
+    }
+    .trust-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--em); opacity: 0.7; flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION UTILITIES
+    ══════════════════════════════════════════ */
+    .sec-pad { padding-block: 100px; }
+    .sec-label {
+      display: flex; align-items: center; gap: 13px;
+      font-size: 0.57rem; font-weight: 600;
+      letter-spacing: 0.36em; text-transform: uppercase;
+      color: var(--em); margin-bottom: 22px;
+    }
+    .sec-label::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, var(--em-border), transparent);
+    }
+
+    /* ══════════════════════════════════════════
+       REAL ESTATE SECTION
+    ══════════════════════════════════════════ */
+
+    /* Large feature card — image + copy side by side */
+    .re-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+      overflow: hidden;
+    }
+
+    .re-img {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px 0 0 18px;
+      /* Fixed height on mobile via aspect-ratio */
+    }
+    /* ─── PROPERTIES IMAGE ─── */
+    .re-img img {
+      transition: transform 0.7s var(--ease);
+      filter: brightness(0.80) saturate(0.85);
+    }
+    .re-card:hover .re-img img { transform: scale(1.05); }
+
+    /* Gradient bleed into copy panel */
+    .re-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right, transparent 55%, rgba(9,9,11,0.65) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* "Active Listings" live badge */
+    .live-badge {
+      position: absolute; top: 18px; left: 18px; z-index: 2;
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.57rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--txt);
+      background: var(--glass-strong);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(16,185,129,0.28);
+      padding: 7px 14px; border-radius: 50px;
+    }
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #4ade80;
+      animation: waPulse 2.2s infinite;
+    }
+
+    /* Copy pane */
+    .re-copy {
+      padding: 52px 46px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    /* Edit: RE card heading */
+    .re-copy h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 2.8vw, 2.6rem);
+      font-weight: 500; line-height: 1.12;
+      color: var(--txt); margin-bottom: 18px;
+    }
+    .re-copy h2 em { font-style: italic; color: var(--em); }
+    /* Edit: RE description */
+    .re-copy p {
+      font-size: 0.82rem; font-weight: 300;
+      line-height: 1.9; color: var(--txt-2); margin-bottom: 28px;
+    }
+
+    /* Spec tag pills */
+    .pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 32px; }
+    .pill {
+      font-size: 0.60rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--em);
+      border: 1px solid var(--em-border);
+      padding: 5px 14px; border-radius: 50px;
+      background: var(--em-dim);
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .pill:hover {
+      background: rgba(16,185,129,0.20);
+      border-color: rgba(16,185,129,0.5);
+    }
+
+    /* Key stats row */
+    .re-stats {
+      display: flex; gap: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat-val {
+      font-family: var(--serif);
+      font-size: 1.75rem; font-weight: 400;
+      color: var(--em); display: block; line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 0.58rem; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--txt-3); margin-top: 5px; display: block;
+    }
+
+    /* Three small listing cards below */
+    .listing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px; margin-top: 14px;
+    }
+    .l-card {
+      position: relative; border-radius: 12px;
+      overflow: hidden; aspect-ratio: 4/3; cursor: pointer;
+    }
+    .l-card img {
+      filter: brightness(0.72) saturate(0.8);
+      transition: transform 0.55s var(--ease), filter 0.55s var(--ease);
+    }
+    .l-card:hover img {
+      transform: scale(1.07);
+      filter: brightness(0.88) saturate(1);
+    }
+    .l-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(9,9,11,0.88) 0%, transparent 55%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 16px;
+    }
+    /* Edit: listing location & price */
+    .l-loc {
+      font-size: 0.58rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--em); margin-bottom: 3px;
+    }
+    .l-price {
+      font-family: var(--serif);
+      font-size: 1.08rem; font-weight: 400;
+      color: var(--txt); line-height: 1;
+    }
+
+    /* ══════════════════════════════════════════
+       TECH CONCIERGE SECTION
+    ══════════════════════════════════════════ */
+    .tech-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 540px;
+      overflow: hidden;
+    }
+    .tech-copy {
+      padding: 52px 46px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    /* Edit: tech heading */
+    .tech-copy h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 2.8vw, 2.6rem);
+      font-weight: 500; line-height: 1.12;
+      color: var(--txt); margin-bottom: 18px;
+    }
+    .tech-copy h2 em { font-style: italic; color: var(--blue); }
+    /* Edit: tech body copy */
+    .tech-copy p {
+      font-size: 0.82rem; font-weight: 300;
+      line-height: 1.9; color: var(--txt-2); margin-bottom: 28px;
+    }
+
+    /* Device feature list */
+    .dev-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+    .dev-item {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 0.78rem; color: var(--txt-2); font-weight: 300;
+    }
+    .dev-icon {
+      width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
+      background: rgba(59,130,246,0.10);
+      border: 1px solid rgba(59,130,246,0.20);
+      display: flex; align-items: center;
+      justify-content: center; font-size: 1rem;
+    }
+    .dev-name {
+      font-weight: 600; color: var(--txt);
+      font-size: 0.76rem; display: block; margin-bottom: 1px;
+    }
+    .dev-spec { font-size: 0.64rem; color: var(--txt-3); }
+
+    /* Blue-tinted link button */
+    .btn-blue-ghost {
+      font-family: var(--sans);
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--blue);
+      border: 1px solid rgba(59,130,246,0.30);
+      padding: 13px 26px; border-radius: 50px;
+      background: transparent; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      align-self: flex-start;
+      transition: all 0.28s var(--ease);
+      /* Glow on button */
+      box-shadow: 0 0 0 0 var(--blue-glow);
+    }
+    .btn-blue-ghost:hover {
+      background: rgba(59,130,246,0.08);
+      border-color: rgba(59,130,246,0.55);
+      box-shadow: 0 0 20px var(--blue-glow);
+      gap: 14px;
+    }
+
+    /* ─── TECH / IPHONE IMAGE ─── */
+    .tech-img {
+      position: relative; overflow: hidden;
+      border-radius: 0 18px 18px 0;
+    }
+    .tech-img img {
+      filter: brightness(0.78) saturate(0.85);
+      transition: transform 0.7s var(--ease);
+    }
+    .tech-card:hover .tech-img img { transform: scale(1.05); }
+    /* Gradient bleed */
+    .tech-img::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(
+        to left, transparent 50%, rgba(9,9,11,0.58) 100%
+      );
+      pointer-events: none;
+    }
+    /* Floating info card on image */
+    .tech-float {
+      position: absolute; bottom: 22px; right: 22px; z-index: 2;
+      background: var(--glass-strong);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(59,130,246,0.28);
+      border-radius: 12px; padding: 16px 20px; min-width: 175px;
+    }
+    /* Edit: floating card label and value */
+    .tf-label {
+      font-size: 0.54rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 6px; display: block;
+    }
+    .tf-val {
+      font-family: var(--serif);
+      font-size: 1.15rem; font-weight: 500;
+      color: var(--txt); display: block; line-height: 1;
+    }
+
+    /* ══════════════════════════════════════════
+       CONSULTATION / CTA SECTION
+    ══════════════════════════════════════════ */
+    .sec-cta { padding-block: 110px; text-align: center; position: relative; }
+
+    /* Subtle emerald radial under section */
+    .sec-cta::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(16,185,129,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Art-deco corner frame */
+    .cta-box {
+      position: relative; z-index: 1;
+      max-width: 720px; margin-inline: auto;
+      padding: 72px 48px;
+    }
+    .cta-box::before, .cta-box::after {
+      content: '';
+      position: absolute;
+      width: 44px; height: 44px;
+      border-color: rgba(16,185,129,0.28);
+      border-style: solid;
+    }
+    .cta-box::before { top: 0; left: 0; border-width: 1px 0 0 1px; }
+    .cta-box::after  { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+    /* Edit: CTA eyebrow */
+    .cta-eye {
+      font-size: 0.58rem; font-weight: 600;
+      letter-spacing: 0.36em; text-transform: uppercase;
+      color: var(--em); display: block; margin-bottom: 22px;
+    }
+    /* Edit: CTA heading */
+    .cta-h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 400; line-height: 1.10;
+      color: var(--txt); margin-bottom: 18px;
+    }
+    .cta-h2 em { font-style: italic; color: var(--em); }
+    /* Edit: CTA body */
+    .cta-body {
+      font-size: 0.84rem; font-weight: 300;
+      line-height: 1.9; color: var(--txt-2);
+      max-width: 420px; margin-inline: auto;
+      margin-bottom: 44px; letter-spacing: 0.02em;
+    }
+    /* Edit: disclaimer line */
+    .cta-fine {
+      margin-top: 18px;
+      font-size: 0.58rem; letter-spacing: 0.14em;
+      color: var(--txt-3);
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-block: 40px;
+    }
+    .foot-inner {
+      display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: space-between;
+      gap: 18px;
+    }
+    /* Edit: copyright — year updated to 2026 */
+    .foot-copy {
+      font-size: 0.60rem; letter-spacing: 0.12em;
+      color: var(--txt-3);
+    }
+    .foot-copy strong { color: var(--em); font-weight: 500; }
+    .foot-links { display: flex; gap: 22px; flex-wrap: wrap; }
+    .foot-links a {
+      font-size: 0.60rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--txt-3);
+      transition: color 0.25s ease;
+    }
+    .foot-links a:hover { color: var(--em); }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE — ≤ 768 px
+    ══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .nav-desktop { display: none; }
+      .hdr-inner { height: 64px; }
+
+      /* Hero */
+      .hero { min-height: auto; padding-block: 100px 70px; }
+      .hero-content { max-width: 100%; }
+
+      /* RE main card */
+      .re-card { grid-template-columns: 1fr; }
+      .re-img   { border-radius: 18px 18px 0 0; aspect-ratio: 16/9; }
+      .re-copy  { padding: 34px 26px 38px; }
+      .re-stats { gap: 18px; flex-wrap: wrap; }
+
+      /* Listing grid: single column */
+      .listing-grid { grid-template-columns: 1fr; }
+
+      /* Tech card */
+      .tech-card { grid-template-columns: 1fr; }
+      .tech-copy { padding: 34px 26px 32px; }
+      .tech-img  { border-radius: 0 0 18px 18px; aspect-ratio: 4/3; min-height: 260px; }
+      .tech-img::before {
+        background: linear-gradient(to top, rgba(9,9,11,0.7) 0%, transparent 55%);
+      }
+
+      /* CTA */
+      .cta-box { padding: 48px 22px; }
+
+      /* Footer */
+      .foot-inner { flex-direction: column; text-align: center; }
+      .foot-links { justify-content: center; }
+    }
+
+    @media (max-width: 420px) {
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .btn-em, .btn-ghost { text-align: center; }
+      .trust { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════ AMBIENT MESH BACKGROUND ════════ -->
+  <div class="mesh" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <!-- ════════ FLOATING WHATSAPP FAB ════════ -->
+  <!--
+    ✏️ EDIT: Replace +2348000000000 with the real WhatsApp number
+    Format: https://wa.me/[country-code][number]  (no + or spaces)
+  -->
+  <a class="wa-fab"
+     href="https://wa.me/2348000000000?text=Hello%20KEEM%20FOREIGN%2C%20I%27d%20like%20to%20book%20a%20private%20consultation."
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Chat with us on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.531 5.845L.057 23.428a.5.5 0 0 0 .61.61l5.638-1.473A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.847 0-3.587-.47-5.11-1.3l-.365-.213-3.795.991.997-3.703-.233-.376A9.957 9.957 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+    </svg>
+  </a>
+
+  <div class="page">
+
+    <!-- ════════ HEADER ════════ -->
+    <header class="hdr">
+      <div class="wrap">
+        <div class="hdr-inner">
+
+          <!-- ✏️ Edit: brand name & tagline -->
+          <a class="logo" href="#">
+            <div class="logo-gem" aria-hidden="true"></div>
+            <div class="logo-txt">
+              <span class="logo-name">KEEM FOREIGN</span>
+              <span class="logo-tag">Curated for the Elite</span>
+            </div>
+          </a>
+
+          <!-- ✏️ Edit: nav links -->
+          <nav class="nav-desktop" aria-label="Primary navigation">
+            <a href="#real-estate" class="nav">Properties</a>
+            <a href="#tech" class="nav">Tech Concierge</a>
+            <a href="#consult" class="nav">About</a>
+            <a href="#consult" class="nav-pill nav">Book Now</a>
+          </nav>
+
+        </div>
+      </div>
+    </header>
+
+
+    <!-- ════════ HERO ════════ -->
+    <section class="hero" aria-label="Hero">
+
+      <!-- ✏️ HERO BG IMAGE — Luxury Mansion (confirmed Unsplash URL) -->
+      <div class="hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
+          alt=""
+          role="presentation"
+          loading="eager"
+        />
+      </div>
+
+      <div class="wrap">
+        <div class="hero-content">
+
+          <div class="v-rule r d1" aria-hidden="true"></div>
+
+          <!-- ✏️ Edit: eyebrow text -->
+          <span class="hero-eye r d1">Abuja · Lagos · London · Dubai</span>
+
+          <!-- ✏️ Edit: main headline -->
+          <h1 class="hero-h1 r d2">
+            The <em>Gold Standard</em><br>in Properties &amp; Tech.
+          </h1>
+
+          <!-- ✏️ Edit: sub-headline -->
+          <p class="hero-sub-h r d3">Curated for the Elite.</p>
+
+          <!-- ✏️ Edit: hero body copy -->
+          <p class="hero-body r d3">
+            We broker the world's most exceptional real estate and
+            source elite mobile technology — for clients who
+            set their own standard of living.
+          </p>
+
+          <div class="cta-row r d4">
+            <!-- ✏️ Edit: primary CTA button text & href -->
+            <a href="#consult" class="btn-em">Book a Private Consultation</a>
+            <!-- ✏️ Edit: ghost CTA text -->
+            <a href="#real-estate" class="btn-ghost">View Portfolio</a>
+          </div>
+
+          <!-- ✏️ Edit: trust / social proof items -->
+          <div class="trust r d5">
+            <div class="trust-item"><span class="trust-dot"></span>$2.4B+ Portfolio</div>
+            <div class="trust-item"><span class="trust-dot"></span>340+ Deals Closed</div>
+            <div class="trust-item"><span class="trust-dot"></span>12K+ Devices Sourced</div>
+            <div class="trust-item"><span class="trust-dot"></span>Private Clients Only</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ════════ REAL ESTATE SECTION ════════ -->
+    <section class="sec-pad" id="real-estate" aria-label="Real Estate">
+      <div class="wrap">
+
+        <!-- ✏️ Edit: section label -->
+        <div class="sec-label r d1">Real Estate Division</div>
+
+        <!-- Large feature card -->
+        <div class="re-card glass r d2">
+
+          <div class="re-img">
+            <!-- ✏️ PROPERTIES IMAGE — confirmed Unsplash URL -->
+            <img
+              src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
+              alt="Luxury property — Abuja Listings"
+              loading="lazy"
+            />
+            <span class="live-badge">
+              <span class="live-dot"></span>
+              Active Listings
+            </span>
+          </div>
+
+          <div class="re-copy">
+            <!-- ✏️ Edit: card heading -->
+            <h2>The Portfolio —<br><em>Abuja, Luxury</em> Listings</h2>
+            <!-- ✏️ Edit: card description -->
+            <p>
+              From palatial residences in Maitama and Asokoro to
+              prestigious commercial addresses in Wuse II — we grant
+              discreet access to properties that never appear on the
+              open market.
+            </p>
+            <!-- ✏️ Edit: spec pills (add/remove as needed) -->
+            <div class="pills">
+              <span class="pill">Maitama</span>
+              <span class="pill">Asokoro</span>
+              <span class="pill">Wuse II</span>
+              <span class="pill">Off-Market</span>
+              <span class="pill">Private Villas</span>
+            </div>
+            <!-- ✏️ Edit: stats -->
+            <div class="re-stats">
+              <div>
+                <span class="stat-val">₦4.2B+</span>
+                <span class="stat-lbl">Abuja Listings</span>
+              </div>
+              <div>
+                <span class="stat-val">94%</span>
+                <span class="stat-lbl">Off-Market</span>
+              </div>
+              <div>
+                <span class="stat-val">48hr</span>
+                <span class="stat-lbl">Response Time</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Three mini listing cards — same verified Unsplash URLs -->
+        <div class="listing-grid r d3">
+
+          <!-- ✏️ Edit: listing 1 -->
+          <div class="l-card glass">
+            <img
+              src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=75"
+              alt="Maitama private residence"
+              loading="lazy"
+            />
+            <div class="l-overlay">
+              <span class="l-loc">Maitama, Abuja</span>
+              <span class="l-price">₦850M</span>
+            </div>
+          </div>
+
+          <!-- ✏️ Edit: listing 2 -->
+          <div class="l-card glass">
+            <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=75"
+              alt="Asokoro estate"
+              loading="lazy"
+            />
+            <div class="l-overlay">
+              <span class="l-loc">Asokoro, Abuja</span>
+              <span class="l-price">₦1.2B</span>
+            </div>
+          </div>
+
+          <!-- ✏️ Edit: listing 3 -->
+          <div class="l-card glass">
+            <img
+              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=75"
+              alt="Wuse II commercial property"
+              loading="lazy"
+            />
+            <div class="l-overlay">
+              <span class="l-loc">Wuse II, Abuja</span>
+              <span class="l-price">₦620M</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ════════ TECH CONCIERGE SECTION ════════ -->
+    <section class="sec-pad" id="tech" aria-label="Tech Concierge">
+      <div class="wrap">
+
+        <!-- ✏️ Edit: section label -->
+        <div class="sec-label r d1">Tech Concierge Division</div>
+
+        <div class="tech-card glass r d2">
+
+          <div class="tech-copy">
+            <!-- ✏️ Edit: tech heading -->
+            <h2>Elite Mobile —<br><em>iPhone &amp; iPad</em> Concierge</h2>
+            <!-- ✏️ Edit: tech body copy -->
+            <p>
+              Authenticated flagship iPhones, limited-edition iPads,
+              and bespoke device configurations — sourced globally,
+              delivered with white-glove precision.
+            </p>
+
+            <!-- ✏️ Edit: device items (icon, name, spec) -->
+            <ul class="dev-list">
+              <li class="dev-item">
+                <span class="dev-icon">📱</span>
+                <div>
+                  <span class="dev-name">iPhone 15 Pro Max — Titanium</span>
+                  <span class="dev-spec">Natural &amp; Black · 1TB · Sealed · International</span>
+                </div>
+              </li>
+              <li class="dev-item">
+                <span class="dev-icon">📱</span>
+                <div>
+                  <span class="dev-name">iPhone 15 Pro — Desert Titanium</span>
+                  <span class="dev-spec">256GB · Factory Unlocked · Dual SIM</span>
+                </div>
+              </li>
+              <li class="dev-item">
+                <span class="dev-icon">🖥️</span>
+                <div>
+                  <span class="dev-name">iPad Pro M2 — 12.9″ Space Grey</span>
+                  <span class="dev-spec">Wi-Fi + Cellular · 512GB · With Apple Pencil</span>
+                </div>
+              </li>
+              <li class="dev-item">
+                <span class="dev-icon">⌚</span>
+                <div>
+                  <span class="dev-name">Apple Watch Ultra 2</span>
+                  <span class="dev-spec">49mm · Titanium · Alpine Loop · Sealed</span>
+                </div>
+              </li>
+            </ul>
+
+            <!-- ✏️ Edit: CTA link text -->
+            <a href="#consult" class="btn-blue-ghost">
+              Request a Device &nbsp;→
+            </a>
+          </div>
+
+          <div class="tech-img">
+            <!-- ✏️ MOBILE/iPHONE IMAGE — confirmed Unsplash URL -->
+            <img
+              src="https://images.unsplash.com/photo-1556656793-062ff9878258?auto=format&fit=crop&w=800&q=80"
+              alt="Flagship iPhone — Tech Concierge"
+              loading="lazy"
+            />
+            <!-- Floating badge on image -->
+            <div class="tech-float">
+              <!-- ✏️ Edit: badge label & value -->
+              <span class="tf-label">Latest In Stock</span>
+              <span class="tf-val">iPhone 15 Pro Max</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ════════ CONSULTATION CTA ════════ -->
+    <section class="sec-cta" id="consult" aria-label="Book a Consultation">
+      <div class="wrap">
+        <div class="cta-box glass r d1">
+
+          <!-- ✏️ Edit: eyebrow -->
+          <span class="cta-eye">Private Access — By Appointment Only</span>
+
+          <!-- ✏️ Edit: heading -->
+          <h2 class="cta-h2">
+            Ready to Experience<br>the <em>Difference?</em>
+          </h2>
+
+          <!-- ✏️ Edit: body text -->
+          <p class="cta-body">
+            Schedule a confidential consultation and let our specialists
+            craft a bespoke strategy — whether you're acquiring prime
+            property or building an elite tech portfolio.
+          </p>
+
+          <!-- ✏️ Edit: button href (mailto, booking link, or WhatsApp) -->
+          <a href="mailto:consult@keemforeign.com" class="btn-em r d2">
+            Book a Consultation &nbsp;→
+          </a>
+
+          <!-- ✏️ Edit: fine print -->
+          <p class="cta-fine r d3">
+            All inquiries treated with complete discretion &nbsp;·&nbsp; Response within 24 hours
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ════════ FOOTER ════════ -->
+    <footer class="footer">
+      <div class="wrap">
+        <div class="foot-inner">
+          <!-- ✏️ Edit: copyright — year is 2026 -->
+          <p class="foot-copy">
+            &copy; 2026 <strong>KEEM FOREIGN</strong>. All rights reserved.
+            Curated for the Elite.
+          </p>
+          <!-- ✏️ Edit: footer links -->
+          <nav class="foot-links" aria-label="Footer navigation">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /page -->
+
+</body>
+</html>
